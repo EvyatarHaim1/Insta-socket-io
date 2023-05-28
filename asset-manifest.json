@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Insta-socket-io/static/css/main.ba10fa5b.css",
-    "main.js": "/Insta-socket-io/static/js/main.be3bee9e.js",
+    "main.js": "/Insta-socket-io/static/js/main.67e3e755.js",
     "static/media/slick.svg": "/Insta-socket-io/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/Insta-socket-io/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/Insta-socket-io/static/media/slick.c94f7671dcc99dce43e2.ttf",
@@ -38,10 +38,10 @@
     "static/media/messageWhite.svg": "/Insta-socket-io/static/media/messageWhite.92730fb76ce844ffeb7d88d217e1012b.svg",
     "static/media/flagBlack.svg": "/Insta-socket-io/static/media/flagBlack.3ed51f6473b222d0410353725d9ec785.svg",
     "main.ba10fa5b.css.map": "/Insta-socket-io/static/css/main.ba10fa5b.css.map",
-    "main.be3bee9e.js.map": "/Insta-socket-io/static/js/main.be3bee9e.js.map"
+    "main.67e3e755.js.map": "/Insta-socket-io/static/js/main.67e3e755.js.map"
   },
   "entrypoints": [
     "static/css/main.ba10fa5b.css",
-    "static/js/main.be3bee9e.js"
+    "static/js/main.67e3e755.js"
   ]
 }
