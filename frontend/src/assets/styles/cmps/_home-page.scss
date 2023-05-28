@@ -1,0 +1,8 @@
+.post-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}

@@ -1,0 +1,26 @@
+.heart-sign-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+
+  .iconsOnLeft {
+    flex: 1;
+    .heart-icon {
+      padding: 8px 8px 8px 0px;
+    }
+    .commentIcon {
+      padding: 8px 8px 8px 8px;
+    }
+
+    .planeIcon {
+      padding: 8px 8px 8px 8px;
+    }
+  }
+
+  .flagIcon {
+    padding: 8px 0px 8px 8px;
+    margin-right: -4px;
+    flex: 0;
+  }
+}

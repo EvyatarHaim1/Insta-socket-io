@@ -1,0 +1,30 @@
+.switch-accounts-modal {
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.1px solid lightgrey;
+    padding: 8px;
+    align-items: center;
+  }
+
+  .registered-user {
+    display: flex;
+    width: 96%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+  }
+  .left-section {
+    display: flex;
+    width: 90%;
+    text-align: center;
+
+    .username {
+      margin-left: 10px;
+    }
+  }
+  .modal-title {
+    margin: 0px auto;
+  }
+}

@@ -1,0 +1,79 @@
+.search-drawer {
+  .title {
+    margin-bottom: 36px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .search-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    width: 90%;
+    background-color: #efefef;
+    height: 40px;
+    padding: 3px 16px;
+    border-radius: 10px;
+  }
+  .input {
+    height: 34px;
+    background-color: transparent;
+    flex: 1;
+  }
+  .closeImg {
+    width: 8px;
+    height: 8px;
+  }
+  .closeBtnAvatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #848485;
+    width: 13px;
+    height: 13px;
+    border-radius: 40px;
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 24px;
+  }
+  .first-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0px 16px 0px;
+  }
+  .recentTxt {
+    font-weight: 600;
+  }
+  .clearAlltxt {
+    color: #0095f6;
+    cursor: pointer;
+  }
+  .clearAlltxt:hover {
+    color: #37628b;
+  }
+  .row {
+    display: flex;
+    padding: 6px 0px 8px 0px;
+    margin-bottom: 6px;
+    cursor: pointer;
+
+    .details-user {
+      display: flex;
+      flex-direction: column;
+      margin-left: 12px;
+      flex: 1;
+    }
+  }
+}
+
+.MuiPaper-root
+  .MuiPaper-elevation
+  .MuiPaper-elevation16
+  .MuiDrawer-paper
+  .MuiDrawer-paperAnchorLeft
+  css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+}

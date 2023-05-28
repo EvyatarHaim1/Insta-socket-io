@@ -1,0 +1,26 @@
+.footer-input {
+  display: flex;
+  position: fixed;
+  height: 44px;
+  padding: 20px;
+  bottom: 20px;
+}
+
+.footer-emoji {
+  width: 24px;
+  height: 24px;
+  background-image: url("../../icons/smiley.svg");
+  background-size: cover;
+}
+.footer-input-area {
+  display: flex;
+  align-items: center;
+  border-radius: 22px;
+  border: 1px solid lightgray;
+  padding: 11px;
+}
+.footer-input-area-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

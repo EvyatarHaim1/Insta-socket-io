@@ -1,0 +1,10 @@
+.user-message {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 20px;
+}
+.user-message:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}

@@ -1,0 +1,14 @@
+.replace-img-btn {
+  background-color: #1877f2;
+  color: white;
+  height: 32px;
+  width: 169px;
+  border-radius: 8px;
+  margin-top: 24px;
+}
+
+@media (max-width: 500px) {
+  .replace-img-btn {
+    width: 100%;
+  }
+}

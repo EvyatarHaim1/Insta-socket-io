@@ -1,0 +1,162 @@
+.story-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  .story-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+    height: 8%;
+    margin-bottom: 10px;
+  }
+  .img-container {
+    height: fit-content;
+    width: 100%;
+    img {
+      width: 100%;
+      min-height: 587.5px;
+      max-height: 587.5px;
+      // object-fit: cover;
+    }
+  }
+
+  .preview-details {
+    font-size: 14px;
+    color: #262626;
+    padding-bottom: 32px;
+  }
+
+  .input-container {
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    width: 466px;
+  }
+
+  .heart-sign-container {
+    display: flex;
+    flex-direction: row;
+    // justify-content: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 30px;
+
+    button {
+      border: none;
+      background-color: inherit;
+    }
+  }
+
+  .likesContainer {
+    margin-bottom: 8px;
+  }
+
+  .storytitle {
+    margin-bottom: 8px;
+  }
+
+  .viewComments {
+    color: #8e8e8e;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .comments {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+  }
+  .comment {
+    font-weight: 400;
+    font-size: 14px;
+    height: 18px;
+    margin-bottom: 4px;
+  }
+  .input-area {
+    display: flex;
+
+    width: 100%;
+    height: fit-content;
+
+    button {
+      border: none;
+      background-color: inherit;
+    }
+  }
+  .emoji {
+    width: 13px;
+    height: 13px;
+    background-image: url("../../icons/smiley.svg");
+    background-size: cover;
+  }
+
+  .userName {
+    margin-left: 10px;
+    font-size: 14px;
+  }
+
+  .avatar-section {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    width: 200px;
+  }
+
+  .threeDots {
+    padding-right: 4px;
+  }
+  .creationDate {
+    margin-left: 8px;
+  }
+
+  .input-field {
+    flex: 1;
+  }
+
+  .story-img {
+    max-height: 580;
+  }
+}
+.slick-slider {
+  width: 468px;
+  .slick-prev {
+    z-index: 10;
+    left: 10px;
+    opacity: 0.4;
+  }
+
+  .slick-next {
+    z-index: 10;
+    right: 10px;
+    opacity: 0.4;
+  }
+
+  .slick-dots {
+    bottom: 10px;
+  }
+
+  .slick-dots li button:before {
+    color: white;
+  }
+
+  .slick-list {
+    margin-bottom: -5px;
+  }
+
+  .slick-dots li {
+    margin: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .story-container {
+    margin: 50px auto;
+    width: 320px;
+  }
+  .slick-slider {
+    width: 100%;
+  }
+}
