@@ -14,7 +14,7 @@ import io from 'socket.io-client'
 import { Chat } from '../cmps/chat'
 
 function Messages() {
-  const socket = io.connect('https://oliakr.github.io/instagram')
+  const socket = io.connect('')
   const user = useSelector((storeState) => storeState.userModule.user)
   const [userToMsg, setUserToMsg] = useState(null)
   const [messageList, setMessageList] = useState([])
@@ -25,7 +25,7 @@ function Messages() {
       setMessageList((list) => [...list, data])
       console.log(messageList)
     })
-  }, [socket])
+  }, [messageList, socket])
 
   const joinRoom = (room) => {
     if (user && room) {

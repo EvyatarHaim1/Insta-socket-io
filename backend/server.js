@@ -9,12 +9,8 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 app.use(bodyParser.json({ type: 'application/*+json' }))
-// parse some custom thing into a Buffer
 app.use(bodyParser.raw({ type: 'application/vnd.custom-type' }))
-
-// parse an HTML body into a string
 app.use(bodyParser.text({ type: 'text/html' }))
-
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(function (req, res, next) {
@@ -24,30 +20,15 @@ app.use(function (req, res, next) {
     'Access-Control-Allow-Headers',
     'Content-Type, Authorization, Content-Length, X-Requested-With'
   )
-
   next()
 })
 
-const corsOptions = {
-  origin: 'https://oliakr.github.io/instagram',
-}
-
 // Enable CORS with options
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 app.use('/', api)
 
 const server = http.createServer(app)
-
-const io = new Server(server, {
-  cors: {
-    origin: 'https://oliakr.github.io/instagram',
-    methods: ['GET', 'POST'],
-    credentials: true,
-    transports: ['websocket', 'polling'],
-  },
-  allowEIO3: true,
-})
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -66,6 +47,17 @@ mongoose
     console.log(err)
   })
 
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    credentials: true,
+    allowedHeaders: ['Access-Control-Allow-Origin'],
+    transports: ['websocket', 'polling'],
+  },
+  allowEIO3: true,
+})
+
 io.on('connection', async (socket) => {
   console.log(`User Connected: ${socket.id}`)
   socket.on('join_room', (room) => {
@@ -81,7 +73,6 @@ io.on('connection', async (socket) => {
         socket.emit('join_room', 'You have successfully joined the room.')
       }
     } else {
-      // Join the room
       socket.join(room)
       socket.emit(
         'join_room',
@@ -92,7 +83,10 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('send_message', (data) => {
-    io.in(data.room).emit('receive_message', data)
+    if (data && data?.room) {
+      console.log('working', data)
+      io.in(data?.room).emit('receive_message', data)
+    }
   })
 
   socket.on('disconnect', () => {
