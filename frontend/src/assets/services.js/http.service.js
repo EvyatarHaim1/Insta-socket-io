@@ -3,7 +3,7 @@ import Axios from "axios";
 // dev
 // const BASE_URL = "http://localhost:4000";
 // prod
-const BASE_URL = "https://olia-instagram-server.onrender.com/";
+const BASE_URL = "https://ev-insta-backend.onrender.com"
 
 export const httpService = {
   async get(endpoint, data) {
