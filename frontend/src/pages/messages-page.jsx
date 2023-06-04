@@ -16,6 +16,9 @@ import { ReactComponent as ArrowLeft } from "../assets/icons/arrow-left.svg";
 import { useNavigate } from "react-router-dom";
 
 function Messages() {
+  //dev
+  // const socket = io.connect("http://localhost:4000/");
+  //prod
   const socket = io.connect("");
   const user = useSelector((storeState) => storeState.userModule.user);
   const [userToMsg, setUserToMsg] = useState(null);
@@ -27,9 +30,8 @@ function Messages() {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
-      console.log(messageList);
     });
-  }, [messageList, socket]);
+  }, [socket]);
 
   const joinRoom = (room) => {
     if (user && room) {
