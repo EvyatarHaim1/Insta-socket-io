@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { toggleSearchDrawer } from "../store/user.action";
 import AutocompleteInput from "./input-autocomplete";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 export default function SearchDrawer() {
   const isSearchOpen = useSelector(
@@ -17,6 +18,7 @@ export default function SearchDrawer() {
   );
   const user = useSelector((storeState) => storeState.userModule.user);
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:480px)");
 
   const otherUsers = gUsers?.filter((u) => u.id !== user?.id);
 
@@ -25,7 +27,7 @@ export default function SearchDrawer() {
     toggleSearchDrawer(false);
   }
   const style = {
-    width: "349px",
+    width: isMobile ? "75%" : "349px",
     padding: "40px 24px 0px 24px",
     zIndex: 1000,
   };

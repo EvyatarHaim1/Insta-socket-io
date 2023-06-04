@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import EmojiPicker from 'emoji-picker-react'
-import chatroomPic from '../assets/icons/chatroomPic.svg'
-import heartBlack from '../assets/icons/heart black.svg'
-import { loadUsers, updateUser } from '../store/user.action.js'
-import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from "react";
+import EmojiPicker from "emoji-picker-react";
+import chatroomPic from "../assets/icons/chatroomPic.svg";
+import heartBlack from "../assets/icons/heart black.svg";
+import { loadUsers, updateUser } from "../store/user.action.js";
+import { useSelector } from "react-redux";
 
 export function ChatRoomFooter({ socket, room, setMessageList }) {
-  const user = useSelector((storeState) => storeState.userModule.user)
-  const users = useSelector((storeState) => storeState.userModule.users)
-  const [text, setText] = useState('')
-  const [, setChosenEmoji] = useState(null)
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const user = useSelector((storeState) => storeState.userModule.user);
+  const users = useSelector((storeState) => storeState.userModule.users);
+  const [text, setText] = useState("");
+  const [, setChosenEmoji] = useState(null);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   function openEmojiPicker() {
-    setShowEmojiPicker(!showEmojiPicker)
+    setShowEmojiPicker(!showEmojiPicker);
   }
 
   function onEmojiClick(event, emojiObject) {
-    setChosenEmoji(emojiObject)
-    setShowEmojiPicker(false)
-    setText((prev) => prev + event.emoji)
+    setChosenEmoji(emojiObject);
+    setShowEmojiPicker(false);
+    setText((prev) => prev + event.emoji);
   }
 
-  const sendMessage = async () => {
-    if (text !== '') {
+  const sendMessage = async (heart) => {
+    if (heart) setText(heart);
+    if (text !== "") {
       const messageData = {
         room: room,
         userId: user.id,
@@ -32,15 +33,15 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
         message: text,
         timestamp:
           new Date(Date.now()).getHours() +
-          ':' +
+          ":" +
           new Date(Date.now()).getMinutes(),
-      }
-      socket.emit('send_message', messageData)
-      const userMessages = [...user.messages]
+      };
+      socket.emit("send_message", messageData);
+      const userMessages = [...user.messages];
       const roomIndex = userMessages.findIndex(
         (chatRoom) => chatRoom?.room === room
-      )
-      let currentRoom = userMessages[roomIndex]
+      );
+      let currentRoom = userMessages[roomIndex];
       let updatedCurrentRoom = {
         ...currentRoom,
         list: [
@@ -52,8 +53,8 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
             message: messageData?.message,
           },
         ],
-      }
-      userMessages[roomIndex] = updatedCurrentRoom
+      };
+      userMessages[roomIndex] = updatedCurrentRoom;
       setMessageList((list) => [
         ...list,
         {
@@ -62,63 +63,54 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
           avatar: messageData?.avatar,
           message: messageData?.message,
         },
-      ])
-      setText('')
+      ]);
+      setText("");
       const otherUserInRoom = users.find(
         (u) => u.id === currentRoom.otherUserId
-      )
+      );
       await updateUser({
         ...user,
         messages: userMessages,
-      })
+      });
       await updateUser({
         ...otherUserInRoom,
         messages: userMessages,
-      })
+      });
     }
-  }
+  };
   return (
-    <div className='footer-input'>
-      <div className='footer-input-area'>
-        <div className='footer-input-area-section'>
+    <div className="footer-input">
+      <div className="footer-input-area">
+        <div className="footer-input-area-section">
           <button>
-            <div
-              className='footer-emoji'
-              onClick={openEmojiPicker}
-            ></div>
+            <div className="footer-emoji" onClick={openEmojiPicker}></div>
           </button>
           <input
-            className='input-field'
-            placeholder='Message...'
-            type={'text'}
-            size={'55'}
+            className="input-field"
+            placeholder="Message..."
+            type={"text"}
+            size={"55"}
+            style={{ width: "100%" }}
             value={text}
             onChange={(event) => {
-              setText(event.target.value)
+              setText(event.target.value);
             }}
             onKeyPress={(event) => {
-              event.key === 'Enter' && sendMessage()
+              event.key === "Enter" && sendMessage();
             }}
           />
           <button onClick={sendMessage}></button>
         </div>
-        <div className='footer-input-area-section'>
-          <img
-            src={chatroomPic}
-            alt='chatroomPic'
-          />
-          <button className='heart-icon'>
-            <img
-              src={heartBlack}
-              alt='heartBlackIcon'
-            />
+        <div className="footer-input-area-section">
+          <img src={chatroomPic} alt="chatroomPic" />
+          <button className="heart-icon" onClick={() => sendMessage("❤️")}>
+            <img src={heartBlack} alt="heartBlackIcon" />
           </button>
         </div>
       </div>
       {showEmojiPicker ? (
         <div
-          style={{ position: 'absolute', bottom: '40px', marginLeft: '80px' }}
-        >
+          style={{ position: "absolute", bottom: "40px", marginLeft: "80px" }}>
           <EmojiPicker
             onEmojiClick={onEmojiClick}
             disableAutoFocus={true}
@@ -127,5 +119,5 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
         </div>
       ) : null}
     </div>
-  )
+  );
 }

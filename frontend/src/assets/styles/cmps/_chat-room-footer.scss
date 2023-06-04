@@ -24,3 +24,12 @@
   align-items: center;
   gap: 8px;
 }
+
+@media (max-width: 480px) {
+  .footer-input-area {
+    width: 320px;
+  }
+  .footer-input {
+    bottom: 50px;
+  }
+}
