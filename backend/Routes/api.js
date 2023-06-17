@@ -5,7 +5,6 @@ const Story = require('../model/storySchema')
 
 router.post('/currentUser', async function (req, res) {
   const user = req.body
-  console.log(req.body)
   let document = await User.findOne({ username: user.username });
   res.send(document)
 })

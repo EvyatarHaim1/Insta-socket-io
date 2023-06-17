@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import chatroomPic from "../assets/icons/chatroomPic.svg";
 import heartBlack from "../assets/icons/heart black.svg";
-import { loadUsers, updateUser } from "../store/user.action.js";
+import { updateOtherUser, updateUser } from "../store/user.action.js";
 import { useSelector } from "react-redux";
 
-export function ChatRoomFooter({ socket, room, setMessageList }) {
+export function ChatRoomFooter({ socket, room }) {
   const user = useSelector((storeState) => storeState.userModule.user);
   const users = useSelector((storeState) => storeState.userModule.users);
   const [text, setText] = useState("");
@@ -55,15 +55,6 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
         ],
       };
       userMessages[roomIndex] = updatedCurrentRoom;
-      setMessageList((list) => [
-        ...list,
-        {
-          timestamp: messageData?.timestamp,
-          fullname: messageData?.fullname,
-          avatar: messageData?.avatar,
-          message: messageData?.message,
-        },
-      ]);
       setText("");
       const otherUserInRoom = users.find(
         (u) => u.id === currentRoom.otherUserId
@@ -72,7 +63,7 @@ export function ChatRoomFooter({ socket, room, setMessageList }) {
         ...user,
         messages: userMessages,
       });
-      await updateUser({
+      await updateOtherUser({
         ...otherUserInRoom,
         messages: userMessages,
       });

@@ -19,7 +19,7 @@ function Messages() {
   //dev
   // const socket = io.connect("http://localhost:4000/");
   //prod
-  const socket = io.connect("");
+  const socket = io.connect("https://ev-insta-backend.onrender.com/");
   const user = useSelector((storeState) => storeState.userModule.user);
   const [userToMsg, setUserToMsg] = useState(null);
   const [messageList, setMessageList] = useState([]);
@@ -29,13 +29,15 @@ function Messages() {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      setMessageList((list) => [...list, data]);
+      if (data.room === room) {
+        setMessageList((list) => [...list, data]);
+      }
     });
-  }, [socket]);
+  }, [socket, room]);
 
-  const joinRoom = (room) => {
+  const joinRoom = (room, userId) => {
     if (user && room) {
-      socket.emit("join_room", room);
+      socket.emit("join_room", room, userId, user.messages);
       socket.on("join_room", (data) => {
         console.log(data);
       });
@@ -127,7 +129,6 @@ function Messages() {
                     socket={socket}
                     room={room}
                     messageList={messageList}
-                    setMessageList={setMessageList}
                   />
                 </div>
               </div>

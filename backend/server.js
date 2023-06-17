@@ -58,38 +58,67 @@ const io = new Server(server, {
   allowEIO3: true,
 })
 
+const connectedRooms = [];
+
 io.on('connection', async (socket) => {
-  console.log(`User Connected: ${socket.id}`)
-  socket.on('join_room', (room) => {
-    const currentRoom = io.sockets.adapter.rooms.get(room)
-    if (currentRoom) {
-      // Check if socket ID exists in the room
-      if (currentRoom.has(socket.id)) {
-        // Socket ID already exists in the room, don't join
-        socket.emit('alreadyJoined', 'You have already joined this room.')
+  socket.on('join_room', (room, userId, messages) => {
+    socket.join(room);
+    const roomObject = connectedRooms.find((item) => item.room === room);
+
+    if (roomObject) {
+      if (roomObject.users.includes(userId)) {
+        socket.emit('alreadyJoined', 'You have already joined this room.');
+        console.log('alreadyJoined', 'You have already joined this room.');
       } else {
-        // Join the room
-        socket.join(room)
-        socket.emit('join_room', 'You have successfully joined the room.')
+        if (roomObject.users.length < 2 && !roomObject.users.includes(userId)) {
+          roomObject.users.push(userId);
+          console.log('currentRoom', roomObject);
+          socket.emit('join_room', 'You have successfully joined the room.');
+        } else {
+          socket.emit('roomFull', 'The room is already full.');
+          console.log('roomFull', 'The room is already full.');
+        }
       }
     } else {
-      socket.join(room)
-      socket.emit(
-        'join_room',
-        `User with ID: ${socket.id} joined room: ${room}`
-      )
-      console.log(`User with ID: ${socket.id} joined room: ${room}`)
+      const newRoomObject = { room: room, users: [userId] };
+      connectedRooms.push(newRoomObject);
+      socket.emit('join_room', `User with ID: ${userId} joined room: ${room}`);
+      console.log(`User with ID: ${userId} joined room: ${room}`);
     }
-  })
+
+    // Populate connectedRooms array from messages
+    messages.forEach((message) => {
+      const roomObject = {
+        room: message.room,
+        users: [userId, message.otherUserId]
+      };
+
+      connectedRooms.push(roomObject);
+    });
+  });
 
   socket.on('send_message', (data) => {
-    if (data && data?.room) {
-      console.log('working', data)
-      io.in(data?.room).emit('receive_message', data)
+    if (data && data.room) {
+      const roomObject = connectedRooms.find((item) => item.room === data.room);
+      if (roomObject && roomObject.users.includes(data.userId)) {
+        console.log('all rooms', connectedRooms)
+        io.in(data.room).emit('receive_message', data);
+      }
     }
-  })
+  });
 
   socket.on('disconnect', () => {
-    console.log('User Disconnected', socket.id)
-  })
-})
+    const disconnectedRooms = connectedRooms.filter((roomObject) => {
+      if (roomObject.users.includes(socket.id)) {
+        roomObject.users.splice(roomObject.users.indexOf(socket.id), 1);
+        return roomObject.users.length > 0;
+      }
+      return true;
+    });
+
+    connectedRooms.length = 0;
+    connectedRooms.push(...disconnectedRooms);
+    console.log('User Disconnected', socket.id);
+  });
+});
+

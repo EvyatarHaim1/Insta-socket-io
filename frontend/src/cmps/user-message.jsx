@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import { useSelector } from "react-redux";
 
@@ -12,12 +12,15 @@ export function UserMessage({
 }) {
   const user = useSelector((storeState) => storeState.userModule.user);
 
+  useEffect(() => {
+    joinRoom(room, user.id);
+  }, []);
+
   const onJoinToChat = () => {
     setUserToMsg(u);
     setRoom(room);
     let currentRoomChats = user?.messages?.find((r) => r.room === room);
     setMessageList(currentRoomChats?.list);
-    joinRoom(room);
   };
   return (
     <div className="user-message" onClick={onJoinToChat}>
